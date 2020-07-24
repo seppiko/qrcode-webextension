@@ -1,0 +1,45 @@
+{
+    "manifest_version": 2,
+    "name": "Seppiko QRCode",
+    "version": "1.0",
+    "description": "Seppiko QRCode is a fast share anything for you.",
+    "author": "Seppiko Project",
+    "homepage_url": "https://seppiko.org/seppiko-qrcode.html",
+
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "icons": {
+        "128": "icons/128.png",
+        "64": "icons/64.png",
+        "48": "icons/48.png",
+        "32": "icons/32.png",
+        "16": "icons/16.png"
+    },
+
+    "content_scripts": [
+        {
+            "matches": [ "*://*/*" ],
+            "js": ["seppiko-qrcode.js", "libs/qrcode.js", "libs/qrcode_UTF8.js", "libs/jquery.min.js"]
+        }
+    ],
+
+    "permissions": [
+        "activeTab",
+        "webRequest"
+    ],
+
+    "offline_enabled": true,
+
+    "options_ui": {
+        "browser_style": true,
+        "page": "options.html"
+    },
+    
+    "browser_action": {
+        "browser_style": true,
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icons/16.png",
+            "32": "icons/32.png"
+        }
+    }
+}
