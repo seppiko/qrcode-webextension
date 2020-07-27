@@ -1,33 +1,37 @@
+// Seppiko QRCode
 
-var create_qrcode = function(text, typeNumber,
-    errorCorrectionLevel) {
+var draw_qrcode = function(text, errorCorrectionLevel) {
+  return create_qrcode(text, 0, errorCorrectionLevel);
+};
 
-  qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8'];
+var create_qrcode = function(text, typeNumber, errorCorrectionLevel) {
+
   var qr = qrcode(typeNumber || 4, errorCorrectionLevel || 'M');
   qr.addData(text);
   qr.make();
-//  return qr.createTableTag();
- return qr.createSvgTag();
+  //  return qr.createTableTag();
+  return qr.createSvgTag();
   // return qr.createImgTag();
 };
 
-var url = "";
-
 function logTabs(tabs) {
-  url = tabs[0].url;
+  var url = tabs[0].url;
+  $('#qrcode').html( draw_qrcode(url, 'M') );
+  $('#qrcode svg').attr({
+    'width': 300,
+    'height': 300
+  });
+
+  $('#preview').text(url.substr(0, 32) + (url.length > 30 ? '...' : '') );
+  $('#preview').css({
+    "margin": "-10px 10px 10px",
+    "font-size": "15px"
+  });
 }
 function onError(error) {
   console.log(`Error: ${error}`);
 }
 
 $(function(){
-  let querying = browser.tabs.query({currentWindow: true, active: true});
-  querying.then(logTabs, onError);
-
-  $('#qrcode').html( create_qrcode(url, 0, 'Q') );
-  $('#qrcode svg').attr({
-    'width': 200,
-    'height': 200
-  });
-
+  chrome.tabs.query({currentWindow: true, active: true}, logTabs);
 });

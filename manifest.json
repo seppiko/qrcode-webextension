@@ -18,24 +18,25 @@
     "content_scripts": [
         {
             "matches": [ "*://*/*" ],
-            "js": ["seppiko-qrcode.js", "libs/qrcode.js", "libs/qrcode_UTF8.js", "libs/jquery.min.js"]
+            "js": ["seppiko-qrcode.js", "libs/qrcode_UTF8.js", "libs/jquery.min.js"]
         }
     ],
 
+    "background": {
+        "scripts": [ "libs/qrcode.js" ]
+    },
+
     "permissions": [
         "activeTab",
-        "webRequest"
+        "webRequest",
+        "tabs"
     ],
 
-    "offline_enabled": true,
-
     "options_ui": {
-        "browser_style": true,
         "page": "options.html"
     },
     
     "browser_action": {
-        "browser_style": true,
         "default_popup": "popup.html",
         "default_icon": {
             "16": "icons/16.png",
